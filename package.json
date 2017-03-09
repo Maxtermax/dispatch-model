@@ -1,0 +1,20 @@
+{
+  "name": "dispatch-model",
+  "private": false,
+  "version": "0.0.0",
+  "description": "Simple express js response custom method for dispatch query to a web api, easy, clean, fast and beautiful code",
+  "dependencies": {
+    "lodash": "^4.17.4"
+  },
+  "scripts": {
+    "debug": "node debug index.js",
+    "start": "node index.js"
+  },
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": ""
+  },
+  "author": "<esnene@gmail.com>",
+  "license": "GNU"
+}
