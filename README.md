@@ -5,7 +5,7 @@ Is a simple custom response express method develop by [me](https://github.com/ma
 Instalation
 -------------
 
-    npm install dispatch-mode --save
+    npm install dispatch-model --save
 
 or
 
