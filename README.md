@@ -225,3 +225,5 @@ module.exports = {
 this code will create a user and save a session with the **firstName**  and now is avaible in **req.session.firstName**
 
 **Note:**  When wanna use **session** you must use **authentication**  setted in **true**
+
+### TODO: COMPLETE DOCUMENTATION
