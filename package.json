@@ -1,19 +1,19 @@
 {
   "name": "dispatch-model",
   "private": false,
-  "version": "0.0.0",
+  "version": "1.0.1",
   "description": "Simple express js response custom method for dispatch query to a web api, easy, clean, fast and beautiful code",
   "dependencies": {
-    "lodash": "^4.17.4"
+    "lodash": "^4.17.4",
+    "mongodb":"^2.2.2"
   },
   "scripts": {
-    "debug": "node debug index.js",
     "start": "node index.js"
   },
   "main": "index.js",
   "repository": {
     "type": "git",
-    "url": ""
+    "url": "https://github.com/Maxtermax/dispatch-model.git"
   },
   "author": "<esnene@gmail.com>",
   "license": "GNU"
