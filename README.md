@@ -45,6 +45,7 @@ Follow this steps:
 
 ```javascript
 const dispatchModel = require('dispatch-model');
+
 app.use("*",(req, res, next)=> {
   res.dispatchModel = dispatchModel;
   next();
@@ -108,14 +109,15 @@ Exmaple:
 module.exports = {
 // UserController.js
   serve: function(req, res) {
-       let responseCases = {
-          success: {
-          omit: ['lastName'],
-          status: 201 //change status to created
-          }
-       }
+     let responseCases = {
+       success: {
+        omit: ['lastName'],
+        status: 201 //change status to created
+      }
+     }
     let query = User.create({firstName: "john", lastName: "doe"});
     res.dispatchModel(query, responseCases);
+
   }//end serve method
 }//end UserController
 ```
@@ -230,7 +232,7 @@ this code will create a user and save a session with the **firstName**  and now 
 **Note:**  When wanna use **session** you must use **authentication**  set in **true**
 
  - **status**
-  Status is usable for indicate the status code of the response in the web api, this que use in all cases.
+  Status is usable for indicate the status code of the response in the web api, this can use in all cases.
 ```javascript
 module.exports = {
   serve: function(req, res) {
@@ -263,17 +265,17 @@ This option can be used for map the response of the query to the database, examp
 ```javascript
 module.exports = {
   showAll: function(req, res) {
-  let responseCases = {
-    success: {
-       map: function(data, next) {
-         data.fullName = data.firstName+" "+data.lastName;
-         return data;
-       }
+    let responseCases = {
+      success: {
+         map: function(data, next) {
+           data.fullName = data.firstName+" "+data.lastName;
+           return data;
+         }
+      }
     }
-  }
     let query = User.find({});
     res.dispatchModel(query, responseCases);
-    }//end showAll
+  }//end showAll
 }
 ```
 return:
@@ -291,33 +293,33 @@ return:
 ```
 
  - **beforeResponse**
-This method can be used for do something before response, this is called when the query to the database is done, examples:
+This method can be used for do something before response, this is called when the query to the database is done, example:
 
 ```javascript
 module.exports = {
   showAll: function(req, res) {
-  let responseCases = {
-    success: {
-       beforeResponse: function(partialData, next) {
-         let owner = partialData.data.id;
-        Pets.find({owner}).then(function(pet) {
-          //do some with you pet
-          next();
-        })
-        .catch((error)=>{
-         error.message === "customError" next(new Error("customError")) ? next(new Error("serverError"))
-       }
-    },
-    errors: {
-      customError: {
-         details: "my custom error detail",
-         status: 400
+    let responseCases = {
+      success: {
+         beforeResponse: function(partialData, next) {
+            let owner = partialData.data.id;
+            Pets.find({owner}).then(function(pet) {
+              //do some with you pet
+              next();
+            })
+            .catch((error)=>{
+             error.message === "customError" next(new Error("customError")) ? next(new Error("serverError"))
+           }
+      },
+      errors: {
+        customError: {
+           details: "my custom error detail",
+           status: 400
+        }
       }
     }
-  }
     let query = User.find({});
     res.dispatchModel(query, responseCases);
-    }//end showAll
+  }//end showAll
 }
 ```
 **Note:**  You **must**  call **next** method to continue the process otherwise it never response, in case that something go wrong you can throw and **error** that will be **catched** by the error cases.
@@ -359,53 +361,56 @@ In case of **serverError**  return:
 ```
 
  - **afterResponse**
-This method can be used for do something after response, this is called when the response is done, examples:
+This method can be used for do something after response, this is called when the response is done, example:
 
 ```javascript
 module.exports = {
   showAll: function(req, res) {
-  let responseCases = {
-    success: {
-       afterResponse: function(data) {
-         console.log("data response was: ", data);
-       }
+    let responseCases = {
+      success: {
+         afterResponse: function(data) {
+           console.log("data response was: ", data);
+         }
+      }
     }
-  }
     let query = User.find({});
     res.dispatchModel(query, responseCases);
-    }//end showAll
+  }//end showAll
 }
 ```
 
  - **view**
-Asuming that you has set some templete engine like [handlebar](http://handlebarsjs.com/) now you can response by **render** a view, example:
+Asuming that you has set some templete engine like [handlebar](http://handlebarsjs.com/) now you can response by **render** a view, with the data of the database to render as you need, example:
 
 ```javascript
 module.exports = {
   showAll: function(req, res) {
-  let responseCases = {
-    success: {
-       view: "path/to/template"
+    let responseCases = {
+      success: {
+         view: "path/to/template"
+      }
     }
-  }
     let query = User.find({});
     res.dispatchModel(query, responseCases);
-    }//end showAll
+  }//end showAll
 }
 ```
 **Note:** the **view** option can be used in all cases, and must be equal to the path of you template, this change depend of the **template engine**
 
+
+
+
 ## Errors
 The **errors** option can get a few arguments like:
-Attribute      | Required | Type
---------       | -----    | ----
-**notFound**        | false    | json
-**notAllow**        | false    | json
-**forbidden**       | false    | json
-**badRequest**       | false    | json
-**conflict**       | false    | json
-**serverError**       | false    | json
-**otherwise**      | false | json
+Attribute       | Required | Type
+--------        | -----    | ----
+**notFound**    | false    | json
+**notAllow**    | false    | json
+**forbidden**   | false    | json
+**badRequest**  | false    | json
+**conflict**    | false    | json
+**serverError** | false    | json
+**otherwise**   | false    | json
 
 
 **Note:**   To trigger any of this **errors responses**, the **Promise** argument must **throw**  an [error](https://nodejs.org/api/errors.html#errors_new_error_message) with a **message** called the same way that the error.
@@ -414,10 +419,10 @@ The **otherwise** is special and represent a generic error that **is not contemp
 
 All of them take as schema to response this:
 
-Attribute      | Required | Type
---------       | -----    | ----
-details        | false    | string
-status         | false    | integer
+Attribute             | Required | Type
+--------              | -----    | ----
+details               | false    | string
+status                | false    | integer
 **generic attribute** | false | json
 
 All the errors cases return the same schema, unless that you use a **generic attribute** to add something, example:
@@ -426,16 +431,16 @@ All the errors cases return the same schema, unless that you use a **generic att
   showAll: function(req, res) {
     let responseCases = {
       errors: {
-    notFound: {
-      details: "my custom message for notFound",
-      myGenerictData: "Hola mundo"
-    },
-    otherwise: {
-      myCustomError: {
-        details: "my custom message",
-        status: 304
-      }
-    }
+        notFound: {
+          details: "my custom message for notFound",
+          myGenerictData: "Hola mundo"
+        },
+        otherwise: {
+          myCustomError: {
+            details: "my custom message",
+            status: 304
+          }
+        }
       }
     }
     let query = User.beHappy({});
