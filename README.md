@@ -310,9 +310,11 @@ module.exports = {
            }
       },
       errors: {
-        customError: {
-           details: "my custom error detail",
-           status: 400
+        otherwise: {
+          customError: {
+             details: "my custom error detail",
+             status: 400
+          }
         }
       }
     }
