@@ -135,7 +135,7 @@ In case of **success** indicate that will return something like:
 }
 ```
 
-
+## Success
 
 The **success** option can get few attibutes like:
 
@@ -151,7 +151,6 @@ Attribute      | Required | Type
 **afterResponse**  | false    | Function
 **view**           | false    | string
 
-## Success
 
  - **omit**: list of attributes that you wanna omit of the query response
 ```javascript
