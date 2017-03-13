@@ -1,7 +1,7 @@
 {
   "name": "dispatch-model",
   "private": false,
-  "version": "1.1.10",
+  "version": "1.1.11",
   "keywords":["dispatch-model","hackdo", "quibdojs", "api", "sailjs", "expressjs", "dispatch-api"],
   "description": "Simple express js response custom method for dispatch query to a web api, easy, clean, fast and beautiful code",
   "dependencies": {
