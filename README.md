@@ -106,16 +106,16 @@ As second argument **responseCases** can transform the data depend on manies esc
 Exmaple:
 ```javascript
 module.exports = {
-// UserController.js
-serve: function(req, res) {
- let responseCases = {
-  success: {
-    omit: ['lastName'],
-          status: 201 //change status to created
-        }
+  // UserController.js
+  serve: function(req, res) {
+    let responseCases = {
+      success: {
+        omit: ['lastName'],
+        status: 201 //change status to created
       }
-      let query = User.create({firstName: "john", lastName: "doe"});
-      res.dispatchModel(query, responseCases);
+    }
+    let query = User.create({firstName: "john", lastName: "doe"});
+    res.dispatchModel(query, responseCases);
   }//end serve method
 }//end UserController
 ```
