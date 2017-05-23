@@ -20,21 +20,21 @@ Follow this steps:
 
  1. Inside the directory responses add a new response file:
 ```javascript
-    //api/responses/dispatchModel.js
-     module.exports = require('dispatch-model');
+ //api/responses/dispatchModel.js
+ module.exports = require('dispatch-model');
 ```
 
 **note**:  `dispatchModel.js` is just a generic name you can call this response file whereaver you want.
 
  2. Add a model with some schema for example:
 ```javascript
-    //api/models/User.js
-   module.exports = {
-    attributes: {
-     firstName: 'string',
-     lastName: 'string'
-   }
+  //api/models/User.js
+  module.exports = {
+   attributes: {
+    firstName: 'string',
+    lastName: 'string'
   }
+ }
 ```
 
 Setup with express js
@@ -67,11 +67,11 @@ the `dispatchModel` is now aviable for use, this take some arguments for dispatc
 ```javascript
 {
   "data": {
-  "firstName": "john",
-  "lastName": "doe",
-  "createdAt": "2017-03-10T02:51:15.184Z",
-  "updatedAt": "2017-03-10T02:51:15.184Z",
-  "id": 34
+    "firstName": "john",
+    "lastName": "doe",
+    "createdAt": "2017-03-10T02:51:15.184Z",
+    "updatedAt": "2017-03-10T02:51:15.184Z",
+    "id": 34
   },
   "status": 200
 }
@@ -107,15 +107,15 @@ Exmaple:
 ```javascript
 module.exports = {
 // UserController.js
-  serve: function(req, res) {
-       let responseCases = {
-          success: {
-          omit: ['lastName'],
+serve: function(req, res) {
+ let responseCases = {
+  success: {
+    omit: ['lastName'],
           status: 201 //change status to created
-          }
-       }
-    let query = User.create({firstName: "john", lastName: "doe"});
-    res.dispatchModel(query, responseCases);
+        }
+      }
+      let query = User.create({firstName: "john", lastName: "doe"});
+      res.dispatchModel(query, responseCases);
   }//end serve method
 }//end UserController
 ```
@@ -128,7 +128,7 @@ In case of **success** indicate that will return something like:
     "createdAt": "2017-03-10T03:32:05.771Z",
     "updatedAt": "2017-03-10T03:32:05.771Z",
     "id": 36
-    },
+  },
   "status": 201
 }
 ```
@@ -185,11 +185,11 @@ module.exports = {
     let responseCases = {
       success: {
        pick: ['firstName']
-      }
-    }
+     }
+   }
 
-    let query = User.find({});
-    res.dispatchModel(query, responseCases);
+   let query = User.find({});
+   res.dispatchModel(query, responseCases);
   }//end serve
 }
 ```
@@ -237,11 +237,11 @@ module.exports = {
     let responseCases = {
       success: {
        status: 202 //change the default status code to 203 Accepted
-      }
-    }
+     }
+   }
 
-    let query = User.find({});
-    res.dispatchModel(query, responseCases);
+   let query = User.find({});
+   res.dispatchModel(query, responseCases);
   }//end serve
 }
 ```
@@ -263,17 +263,17 @@ This option can be used for map the response of the query to the database, examp
 ```javascript
 module.exports = {
   showAll: function(req, res) {
-  let responseCases = {
-    success: {
-       map: function(data, next) {
-         data.fullName = data.firstName+" "+data.lastName;
-         return data;
-       }
+    let responseCases = {
+      success: {
+        map: function(data, next) {
+          data.fullName = data.firstName+" "+data.lastName;
+          return data;
+        }
+      }
     }
-  }
     let query = User.find({});
     res.dispatchModel(query, responseCases);
-    }//end showAll
+  }//end showAll
 }
 ```
 return:
@@ -296,28 +296,32 @@ This method can be used for do something before response, this is called when th
 ```javascript
 module.exports = {
   showAll: function(req, res) {
-  let responseCases = {
-    success: {
-       beforeResponse: function(partialData, next) {
-         let owner = partialData.data.id;
-        Pets.find({owner}).then(function(pet) {
-          //do some with you pet
-          next();
-        })
-        .catch((error)=>{
-         error.message === "customError" next(new Error("customError")) ? next(new Error("serverError"))
-       }
-    },
-    errors: {
-      customError: {
-         details: "my custom error detail",
-         status: 400
+    let responseCases = {
+      success: {
+        beforeResponse: function(partialData, next) {
+          let owner = partialData.data.id;
+          Pets.find({owner}).then(function(pet) {
+            //do some with you pet
+            next();
+          })
+          .catch((error)=>{
+            if(error.message === "customError") return next(new Error("customError"));  
+            next(new Error("serverError"));
+          })
+        }
+       },
+       errors: {
+        othewise: {
+          customError: {
+            details: "my custom error detail",
+            status: 400
+          }          
+        }
       }
     }
-  }
     let query = User.find({});
     res.dispatchModel(query, responseCases);
-    }//end showAll
+  }//end showAll
 }
 ```
 **Note:**  You **must**  call **next** method to continue the process otherwise it never response, in case that something go wrong you can throw and **error** that will be **catched** by the error cases, if you are using  **mongoose.js** you migth need to use [toObject](http://mongoosejs.com/docs/api.html#document_Document-toObject) or [toJSON](http://mongoosejs.com/docs/guide.html) in **beforeResponse** or **map**
@@ -364,16 +368,16 @@ This method can be used for do something after response, this is called when the
 ```javascript
 module.exports = {
   showAll: function(req, res) {
-  let responseCases = {
-    success: {
-       afterResponse: function(data) {
-         console.log("data response was: ", data);
-       }
+    let responseCases = {
+      success: {
+        afterResponse: function(data) {
+          console.log("data response was: ", data);
+        }
+      }
     }
-  }
     let query = User.find({});
     res.dispatchModel(query, responseCases);
-    }//end showAll
+  }//end showAll
 }
 ```
 
@@ -383,14 +387,14 @@ Asuming that you has set some templete engine like [handlebar](http://handlebars
 ```javascript
 module.exports = {
   showAll: function(req, res) {
-  let responseCases = {
-    success: {
+    let responseCases = {
+      success: {
        view: "path/to/template"
-    }
-  }
-    let query = User.find({});
-    res.dispatchModel(query, responseCases);
-    }//end showAll
+     }
+   }
+   let query = User.find({});
+   res.dispatchModel(query, responseCases);
+  }//end showAll
 }
 ```
 **Note:** the **view** option can be used in all cases, and must be equal to the path of you template, this change depend of the **template engine**
@@ -426,21 +430,21 @@ All the errors cases return the same schema, unless that you use a **generic att
   showAll: function(req, res) {
     let responseCases = {
       errors: {
-    notFound: {
-      details: "my custom message for notFound",
-      myGenerictData: "Hola mundo"
-    },
-    otherwise: {
-      myCustomError: {
-        details: "my custom message",
-        status: 304
-      }
-    }
+        notFound: {
+          details: "my custom message for notFound",
+          myGenerictData: "Hola mundo"
+        },
+        otherwise: {
+          myCustomError: {
+            details: "my custom message",
+            status: 304
+          }
+        }
       }
     }
     let query = User.beHappy({});
     res.dispatchModel(query, responseCases);
-  },//end showAll
+  }//end showAll
 ```
 In case of  **notFound** return:
 
