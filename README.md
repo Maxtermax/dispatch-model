@@ -305,17 +305,17 @@ module.exports = {
             next();
           })
           .catch((error)=>{
-            if(error.message === "customError") return next(new Error("customError"));  
+            if(error.message === "customError") return next(new Error("customError"));
             next(new Error("serverError"));
           })
         }
        },
        errors: {
-        othewise: {
+        otherwise: {
           customError: {
             details: "my custom error detail",
             status: 400
-          }          
+          }
         }
       }
     }
