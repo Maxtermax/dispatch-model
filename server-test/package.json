@@ -1,0 +1,28 @@
+{
+  "name": "server-test",
+  "private": true,
+  "version": "0.0.0",
+  "description": "a Sails application",
+  "keywords": [],
+  "dependencies": {
+    "dispatch-model": "^1.1.16",
+    "ejs": "2.3.4",
+    "include-all": "^1.0.0",
+    "mongodb": "^2.2.31",
+    "rc": "1.0.1",
+    "sails": "~0.12.13",
+    "sails-disk": "~0.10.9",
+    "sails-mongo": "^0.12.2"
+  },
+  "scripts": {
+    "debug": "node --inspect app.js",
+    "start": "node app.js"
+  },
+  "main": "app.js",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/esneyder/server-test.git"
+  },
+  "author": "esneyder",
+  "license": ""
+}
