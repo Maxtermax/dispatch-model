@@ -20,11 +20,11 @@ let data = {
   childs: [
     {
       name: "hijo",
-      age: 10,     
+      age: 10,
       pets: [
         {
           name: "fifo",
-          age: 7          
+          age: 7
         }
       ]
     }
@@ -33,11 +33,11 @@ let data = {
 
 let arr = "";
 function te(keys, formato) {
-  console.log(keys, 'keys')
+  //console.log(keys, 'keys')
   for(let i = 0; i < keys.length; i++) {
     let current = keys[i];
     if(_.isArray(formato[current])) {
-      console.log(current)     
+      //console.log(current)
       //let b = formato[current];
     }
   }
