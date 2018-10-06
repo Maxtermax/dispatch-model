@@ -6,7 +6,7 @@ Is a simple custom response express method develop by [me](https://github.com/ma
 
 To dispatch query to a web api, easy, clean, fast and **beautiful code**, it works great with [waterline mongodb driver, localDisk ](https://github.com/vanetix/waterline) and [sailsjs](http://sailsjs.com/) but must be tested with mysql driver for nodejs:
 
- If you find this module helpful  please donate [here](paypal.me/EPalaciosMena)  with the mount of you want, it helps to maintain the project and enhands all.
+ If you find this module helpful  please donate [here](https://www.paypal.me/EPalaciosMena)  with the mount of you want, it helps to maintain the project and enhands all.
 
 
 Instalation
@@ -475,6 +475,6 @@ In case of  **myCustomError** return:
 
 **Note:** in case that dispatchModel get a unexpected error, that was not set in any where, it will response with a **204** **No content**
 
- If you find this module helpful  please donate [here](paypal.me/EPalaciosMena)  with the mount of you want, it helps to maintain the project and enhands all.
+ If you find this module helpful  please donate [here](https://www.paypal.me/EPalaciosMena)  with the mount of you want, it helps to maintain the project and enhands all.
 
 So this is all for now, be in touch if you have some issue or want to contribute to this project.
